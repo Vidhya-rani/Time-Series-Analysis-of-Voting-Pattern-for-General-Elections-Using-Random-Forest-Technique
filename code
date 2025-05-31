@@ -1,0 +1,57 @@
+import numpy as np # linear algebra
+import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv) import os
+import os, sys
+from collections import defaultdict from urllib.request import urlopen import json
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots from ipywidgets import widgets
+import geopandas as gpd import matplotlib.pyplot as plt import seaborn as sns
+%matplotlib inline import random
+from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot import plotly.express as px
+import plotly.graph_objects as go import plotly.figure_factory as ff from plotly.colors import n_colors
+from plotly.subplots import make_subplots init_notebook_mode(connected=True) import cufflinks as cf
+cf.go_offline()
+from wordcloud import WordCloud , ImageColorGenerator from PIL import Image
+from sklearn.utils import resample
+from sklearn.ensemble import RandomForestClassifier from sklearn.model_selection import cross_val_score from google.colab import files
+uploaded = files.upload()
+vote = pd.read_csv('LS_2.0.csv') def value_cleaner(x):
+ 
+try:
+str_temp = (x.split('Rs')[1].split('\n')[0].strip()) str_temp_2 = ''
+for i in str_temp.split(","): str_temp_2 = str_temp_2+i
+return str_temp_2 except:
+x = 0 return x
+vote['ASSETS'] = vote['ASSETS'].apply((value_cleaner)) vote['LIABILITIES'] = vote['LIABILITIES'].apply((value_cleaner)) vote.head()
+vote.rename(columns={"CRIMINAL\nCASES": "CRIMINAL CASES", "GENERAL\nVOTES": "GENERAL VOTES", "POSTAL\nVOTES": "POSTAL VOTES","TOTAL\nVOTES": "TOTAL VOTES","OVER TOTAL ELECTORS \nIN CONSTITUENCY": "OVER TOTAL ELECTORS IN CONSTITUENCY","OVER TOTAL VOTES POLLED \nIN CONSTITUENCY": "OVER TOTAL VOTES POLLED IN
+CONSTITUENCY"}, inplace=True) vote.head()
+import matplotlib.pyplot as plt # Plot GeoPandas map
+fig, ax = plt.subplots(1, 2, figsize=(15, 7)) # Plot GeoPandas map
+ax[0].set_title('State-wise Distribution of Indian Constituencies', fontdict={'fontsize': '15', 'fontweight': '3'})
+merged.plot(column='# Constituency', cmap='inferno_r', linewidth=0.5, ax=ax[0], edgecolor='0.2', legend=True)
+# Plot bar chart
+ax[1].bar(st_con['STATE'], st_con['# Constituency'], color='orange') ax[1].set_title('Statewise distribution of the Constituencies all over India') ax[1].set_xlabel('State')
+ax[1].set_ylabel('Number of Constituencies') ax[1].tick_params(axis='x', rotation=90) plt.tight_layout()
+ 
+plt.show()
+import matplotlib.pyplot as plt
+# Assuming you have prt_win_loss DataFrame from previous code # Creating the bar plot
+plt.figure(figsize=(10, 6))
+bars = plt.bar(prt_win_loss['Party'], prt_win_loss['Counts'], color=prt_win_loss['Verdict'].map({'Constituency Won': 'green', 'Constituency Lost': 'red'})) # Adding labels and title
+plt.xlabel('Political Party') plt.ylabel('Counts')
+plt.title('Win vs Loss Analysis for the Top Parties') # Rotating x-axis labels for better readability plt.xticks(rotation=90)
+# Adding data labels for bar in bars:
+yval = bar.get_height()
+plt.text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom') # Displaying the plot
+plt.tight_layout()
+plt.legend(['Constituency Won', 'Constituency Lost']) plt.show()
+import matplotlib.pyplot as plt
+# Assuming you have ed_cnt and ed_win_cnt DataFrames from previous code # Creating pie chart for overall education qualification of all the nominees plt.figure(figsize=(10, 6))
+explode = [0.1] * len(ed_cnt) # Set explode parameter for all slices
+plt.pie(ed_cnt['Counts'], labels=ed_cnt['EDUCATION'], autopct='%1.1f%%', startangle=140, explode=explode)
+plt.title('Overall Education Qualification of all the Nominees') plt.axis('equal') # Equal aspect ratio ensures that pie is drawn as a circle plt.show()
+# Creating pie chart for education qualification of the winners plt.figure(figsize=(10, 6))
+explode = [0.1] * len(ed_win_cnt) # Set explode parameter for all slices
+ 
+plt.pie(ed_win_cnt['Counts'], labels=ed_win_cnt['EDUCATION'], autopct='%1.1f%%', startangle=140, explode=explode)
+plt.title('Education Qualification of the Winners')
+plt.axis('equal') # Equal aspect ratio ensures that pie is drawn as a circle plt.show()
