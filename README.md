@@ -1,7 +1,8 @@
 🗳️ Time Series Analysis of Voting Patterns for General Elections Using Random Forest
 This project leverages machine learning techniques—specifically the Random Forest algorithm—to analyze and predict voting patterns in Indian General Elections using historical data. The goal is to uncover key trends, identify influential features, and build a predictive model to estimate future election outcomes.
 
-📌 Table of Contents
+📌 Table of Contents:-
+
 📊 Project Overview
 
 🧠 Machine Learning Technique
@@ -15,10 +16,6 @@ This project leverages machine learning techniques—specifically the Random For
 📈 Results and Analysis
 
 📚 Future Scope
-
-👩‍💻 Contributors
-
-📄 License
 
 📊 Project Overview
 Indian General Elections are influenced by multiple factors like:
